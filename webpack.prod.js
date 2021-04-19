@@ -1,3 +1,4 @@
+const path                    = require('path');
 const HtmlWebPackPlugin       = require('html-webpack-plugin'); 
 const MiniCssExtractPlugin    = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -12,7 +13,8 @@ module.exports = {
         minimizer: [ new OptimizeCssAssetsPlugin() ]
     },
     output: {
-        filename: 'main.[contenthash].js'
+        filename: 'main.[contenthash].js',
+        path: path.resolve(__dirname, 'dist'),
     },
     module: {
         rules: [
@@ -73,9 +75,11 @@ module.exports = {
         new MinifyPlugin(),
         new CleanWebpackPlugin(),
 
-        new CopyPlugin([
+        new CopyPlugin({
+            patterns: [
             { from: 'src/assets', to: 'assets/' },
-        ]),
+            ]
+        }),
     ]
 
 }
